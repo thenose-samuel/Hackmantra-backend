@@ -27,11 +27,23 @@ const registerUser = async (request, response) => {
 
 }
 
-const loginUser = (request, response) => {
-    response.status(200).json({
-        "username": "test",
-        "password": "123",
-    });
+const loginUser = async (request, response) => {
+    try {
+        let user = [];
+        user = await User.find({name: request.body.username});
+        if(user[0]?.name !== undefined){
+            if(user[0].password === request.body.password){
+                response.status(200).json(user);
+            } else {
+                response.status(400).json({"status" : "Invalid password"});
+            }
+        } else {
+            response.status(400).json({"status": "User does not exist"});
+        }
+
+    } catch (e) {
+        response.status(500).json({"status": "Internal server error"});
+    }
 }
 
 module.exports = { registerUser, loginUser };
