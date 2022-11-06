@@ -4,9 +4,9 @@ const User = require('../models/user');
 const registerUser = async (request, response) => {
     try{
         let user = [];
-        user = await User.find({ name: `${request.body.name}`});
+        user = await User.find({ username: `${request.body.username}`});
         console.log(user);
-        if(user[0]?.name !== undefined){
+        if(user[0]?.username !== undefined){
             response.status(500).json({
                 "status": "user already exists"
             });

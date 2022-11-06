@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const register = require('./routes/register');
+const requestSupply = require('./routes/requestSupplies')
 const connectDB = require('./controller/connectDB');
 const PORT = process.env.PORT || 3000;
 
@@ -8,6 +9,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/v1/auth/", register);
+app.use("/api/v1/requestSupplies", requestSupply);
 
 const startServer =  async  () => {
     try{
